@@ -12,7 +12,7 @@ Actions:
   build         create binary using builder image
   image         create final image
   run           run the final image
-  build-chain           builder,build,image
+  build-chain   builder,build,image
 
 EOUSAGE
 }
@@ -34,7 +34,7 @@ case $1 in
   run)
     docker run $IMAGE
   ;;
-  all)
+  build-chain)
     $MAKE builder && $MAKE build && $MAKE image
   ;;
   *)
