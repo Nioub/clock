@@ -13,6 +13,10 @@ Actions:
   image         create final image
   run           run the final image
   build-chain   builder,build,image
+  rm            remove running containers
+  rm-image      remove final image
+  rm-builder    remove builder image
+  clean         rm,rm-image,rm-builder
 
 EOUSAGE
 }
@@ -36,6 +40,18 @@ case $1 in
   ;;
   build-chain)
     $MAKE builder && $MAKE build && $MAKE image
+  ;;
+  rm)
+    docker ps -a | grep " $IMAGE" | awk '{print $1}' | xargs docker rm
+  ;;
+  rm-image)
+    docker rmi $IMAGE
+  ;;
+  rm-builder)
+    docker rmi $IMAGE-builder
+  ;;
+  clean)
+    $MAKE rm && $MAKE rm-image && $MAKE rm-builder
   ;;
   *)
     usage
